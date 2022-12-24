@@ -1,4 +1,5 @@
 library(shinydashboard)
+library(plotly)
 
 ui <- dashboardPage(
   dashboardHeader(title = "Mobi Data SSA"),
@@ -23,21 +24,22 @@ ui <- dashboardPage(
         plotOutput("media_linhas", height = 250))
       ),
     fluidRow(
-      box(
+      box(width=4,
         title = "Media de idade da frota",status = "primary", solidHeader = TRUE,
-        plotOutput("media_idade", height = 250)),
+        plotOutput("media_idade")
+        ),
 
-    fluidRow(
-      box(
+      box(width=8,
       h3("Principais corredores"),
       tabsetPanel(
-        tabPanel("Corredores 1", plotOutput("corredores1")),
-        tabPanel("Corredores 2", plotOutput("corredores2")),
-        tabPanel("Corredores 3", plotOutput("corredores3"))
+        tabPanel("Corredores 1", plotOutput("corredores1",width = "100%", height = "340")),
+        tabPanel("Corredores 2", plotOutput("corredores2",width = "100%", height = "340")),
+        tabPanel("Corredores 3", plotOutput("corredores3",width = "100%", height = "340")),
+        tabPanel("Corredores 4", plotOutput("corredores4",width = "100%", height = "340")),
+        tabPanel("Corredores 5", plotOutput("corredores5",width = "100%", height = "340")),
+        tabPanel("Corredores 6", plotOutput("corredores6",width = "100%", height = "340"))
       )
-    )
-    )
-
+    ),
     )
     )
 )

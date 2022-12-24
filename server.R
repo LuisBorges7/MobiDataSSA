@@ -10,10 +10,12 @@ server <- function(input, output){
   #Dados box 2
   linhas <- read.csv(file = "./dados/CSVs/gerais/linhas.csv", sep = ",")
   
-  #Dados box 3
+  #Dados box 4
   df_passageiros <- read.csv(file = "./dados/CSVs/gerais/passageiros.csv",
                           sep = " ")
-  opp <- read.csv(file = "./dados/CSVs/gerais/operadoras.csv", sep = ",")
+  
+  #Dados box 3
+    opp <- read.csv(file = "./dados/CSVs/gerais/operadoras.csv", sep = ",")
   
   #Dados chart idade
   media_idade <- read.csv(file = "./dados/CSVs/gerais/media_idade_frota.csv", sep = ",")
@@ -34,13 +36,20 @@ server <- function(input, output){
   #Dados corredores
   corredores <- read.csv("./dados/CSVs/corredores/corredores_final.csv", sep = ",")
   #Filtra os corredores
-  corredores_sel1 <- filter(corredores, id %in% c(1,2,3,4,5,6,7,8))
-  corredores_sel2 <- filter(corredores, id %in% c(9,10,11,12,13,14,15,16))
-  corredores_sel3 <- filter(corredores, id %in% c(17,18,19,20,21,22,23))
+  corredores_sel1 <- filter(corredores, id %in% c(1,2,3,4))
+  corredores_sel2 <- filter(corredores, id %in% c(5,6,7,8))
+  corredores_sel3 <- filter(corredores, id %in% c(9,10,11,12))
+  corredores_sel4 <- filter(corredores, id %in% c(13,14,15,16))
+  corredores_sel5 <- filter(corredores, id %in% c(17,18,19,20))
+  corredores_sel6 <- filter(corredores, id %in% c(21,22,23))
+  
   #Seleciona ano, corredor, onibus hora
   corredores_sel1 <- select(corredores_sel1, ano, corredor, onibus.hora)
   corredores_sel2 <- select(corredores_sel2, ano, corredor, onibus.hora)
   corredores_sel3 <- select(corredores_sel3, ano, corredor, onibus.hora)
+  corredores_sel4 <- select(corredores_sel4, ano, corredor, onibus.hora)
+  corredores_sel5 <- select(corredores_sel5, ano, corredor, onibus.hora)
+  corredores_sel6 <- select(corredores_sel6, ano, corredor, onibus.hora)
   
   #Dados
   
@@ -113,8 +122,17 @@ server <- function(input, output){
       theme_void() +
       geom_text(aes(label = paste0(value,
         " (", scales::percent(value / sum(value)),
-        ")")), position = position_stack(vjust = 0.4))
+        ")")), position = position_stack(vjust = 0.4)) +
+      theme(legend.text = element_text(size = 12))
 
+  })
+  
+  #Media linhas por ano
+  output$media_linhas <- renderPlot({
+    ggplot(media_linhas, aes(x = ano, y = media, group = operadora)) +
+      geom_line(aes(color=operadora)) +
+      geom_point(aes(color=operadora)) +
+      theme(legend.text = element_text(size = 12))
   })
   
   #Media idade frota
@@ -123,30 +141,47 @@ server <- function(input, output){
       geom_col(width = 0.5, fill = "blue" )
   })
   
-  #Media linhas por ano
-  output$media_linhas <- renderPlot({
-    ggplot(media_linhas, aes(x = ano, y = media, group = operadora)) +
-      geom_line(aes(color=operadora))+
-      geom_point(aes(color=operadora))
-  })
-  
   #Corredores
   output$corredores1 <- renderPlot({
     ggplot(corredores_sel1, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip()
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
   })
   
   output$corredores2 <- renderPlot({
     ggplot(corredores_sel2, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
-      geom_bar(width = 0.8,position="dodge", stat="identity") +
-      coord_flip()
+      geom_bar(width = 0.7,position="dodge", stat="identity") +
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
   })
   
   output$corredores3 <- renderPlot({
     ggplot(corredores_sel3, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
-      geom_bar(width = 0.8,position="dodge", stat="identity") +
-      coord_flip()
+      geom_bar(width = 0.7,position="dodge", stat="identity") +
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
+  })
+  
+  output$corredores4 <- renderPlot({
+    ggplot(corredores_sel4, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
+      geom_bar(width = 0.7,position="dodge", stat="identity") +
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
+  })
+  
+  output$corredores5 <- renderPlot({
+    ggplot(corredores_sel5, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
+      geom_bar(width = 0.7,position="dodge", stat="identity") +
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
+  })
+  
+  output$corredores6 <- renderPlot({
+    ggplot(corredores_sel6, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
+      geom_bar(width = 0.7,position="dodge", stat="identity") +
+      coord_flip() + theme(axis.text = element_text(size = 12)) +
+      theme(legend.text = element_text(size = 14))
   })
 }
 
