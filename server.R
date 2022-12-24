@@ -1,6 +1,8 @@
 library(ggplot2)
 library(tidyverse)
 library(dplyr)
+library(plotly)
+
 
 
 server <- function(input, output){
@@ -128,7 +130,7 @@ server <- function(input, output){
   })
   
   #Media linhas por ano
-  output$media_linhas <- renderPlot({
+  output$media_linhas <- renderPlotly({
     ggplot(media_linhas, aes(x = ano, y = media, group = operadora)) +
       geom_line(aes(color=operadora)) +
       geom_point(aes(color=operadora)) +
@@ -136,52 +138,52 @@ server <- function(input, output){
   })
   
   #Media idade frota
-  output$media_idade <- renderPlot({
+  output$media_idade <- renderPlotly({
     ggplot(media_idade, aes(x = ano, y = idade_media_frota, fill=group)) +
       geom_col(width = 0.5, fill = "blue" )
   })
   
   #Corredores
-  output$corredores1 <- renderPlot({
+  output$corredores1 <- renderPlotly({
     ggplot(corredores_sel1, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
   
-  output$corredores2 <- renderPlot({
+  output$corredores2 <- renderPlotly({
     ggplot(corredores_sel2, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
   
-  output$corredores3 <- renderPlot({
+  output$corredores3 <- renderPlotly({
     ggplot(corredores_sel3, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
   
-  output$corredores4 <- renderPlot({
+  output$corredores4 <- renderPlotly({
     ggplot(corredores_sel4, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
   
-  output$corredores5 <- renderPlot({
+  output$corredores5 <- renderPlotly({
     ggplot(corredores_sel5, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
   
-  output$corredores6 <- renderPlot({
+  output$corredores6 <- renderPlotly({
     ggplot(corredores_sel6, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
-      coord_flip() + theme(axis.text = element_text(size = 12)) +
-      theme(legend.text = element_text(size = 14))
+      coord_flip() + theme(axis.text = element_text(size = 8)) +
+      theme(legend.text = element_text(size = 10))
   })
 }
 
