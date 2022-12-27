@@ -50,6 +50,12 @@ ui <- dashboardPage(
           title = "Aquisição de ônibus novos (histórico)",status = "primary", solidHeader = TRUE,
           plotlyOutput("historico_onibus_novos")
       ),
+    ),
+    fluidRow(
+      box(width=6,
+          title = "Qtde de passagens e salário mínimo",status = "primary", solidHeader = TRUE,
+          plotlyOutput("passagens_sm")
+      )
     )
-    )
+)
 )

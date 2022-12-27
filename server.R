@@ -10,7 +10,7 @@ server <- function(input, output){
   localidade <- read.csv(file = "./dados/CSVs/gerais/cidade.csv", sep = ";")
   
   #Dados box 2
-  linhas <- read.csv(file = "./dados/CSVs/gerais/linhas.csv", sep = ",")
+  df_linhas <- read.csv(file = "./dados/CSVs/gerais/linhas.csv", sep = ",")
   
   #Dados box 4
   df_passageiros <- read.csv(file = "./dados/CSVs/gerais/passageiros.csv",
@@ -33,7 +33,7 @@ server <- function(input, output){
   df_quilometragem <- filter(df_quilometragem, ano == 2021)
   
   #Dados chart media
-  media_linhas <- read.csv("./dados/CSVs/linhas/media.csv", sep = ";")
+  df_media_linhas <- read.csv("./dados/CSVs/linhas/media.csv", sep = ";")
   
   #Dados corredores
   corredores <- read.csv("./dados/CSVs/corredores/corredores_final.csv", sep = ",")
@@ -59,6 +59,9 @@ server <- function(input, output){
   #Historico onibus novos
   df_historico_onibus_novos <- read.csv(file = "./dados/CSVs/gerais/historico_onibus_novos.csv", sep = ",")
   
+  #Passagens e salario minimo
+  df_sm_passagens <- read.csv(file = "./dados/CSVs/gerais/salario_minimo_passagem.csv", sep = ";")
+  
   
   ##Box 1
   output$cidade <- renderInfoBox({
@@ -77,9 +80,11 @@ server <- function(input, output){
     valueBox(
       value = tags$p(icon("fa-sharp fa-solid fa-bus"),
                      "Frota", style = "font-size: 50%;"),
-      HTML(paste("Linhas: ", linhas$linhas, br(),
-                 "Frota: ", linhas$frota, br(),
-                 "Pontos: ", linhas$pontos)),
+      HTML(paste("Linhas: ", df_linhas$linhas, br(),
+                 "Frota: ", df_linhas$frota, br(),
+                 "Ar-condicionado: ", df_linhas$ar_condicionado , "(",
+                 format(round((df_linhas$ar_condicionado*100)/df_linhas$frota, 2))),
+                 "%)"),
       input$count
     )
   })
@@ -136,11 +141,10 @@ server <- function(input, output){
   
   ##Media linhas por ano
   output$media_linhas <- renderPlotly({
-    ggplot(media_linhas, aes(x = ano, y = media, group = operadora)) +
+    ggplot(df_media_linhas, aes(x = ano, y = media, group = operadora)) +
       geom_line(aes(color=operadora)) +
       geom_point(color="blue") +
-      theme(legend.text = element_text(size = 12))
-      
+      theme(legend.text = element_text(size = 12)) 
   })
   
   ##Media idade frota
@@ -197,7 +201,8 @@ server <- function(input, output){
     ggplot(df_historico_frota, aes(x = ano, y = frota_operante)) +
       geom_line(color="blue") +
       geom_point(color="blue") +
-      theme(legend.text = element_text(size = 12))
+      theme(panel.grid.major = element_line(color = "blue",size = 0.25,linetype = 1),
+            legend.text = element_text(size = 12))
   })
   
   ##Historico onibus novos
@@ -205,7 +210,15 @@ server <- function(input, output){
     ggplot(df_historico_onibus_novos, aes(x = ano, y = onibus_novos, fill=group)) +
       geom_col(width = 0.5, fill = "blue" )
   })
+  
+  ##Passagens e salario minimo
+  output$passagens_sm <- renderPlotly({
+    ggplot(df_sm_passagens, aes(x = ano, y = sm_passagem, group = 1)) +
+      geom_line(color="red") +
+      geom_point(color="red") +
+      theme(legend.text = element_text(size = 12)) 
+  })
 }
 
-
+## theme(panel.grid = element_line(color = "#8ccde3",size = 0.75,linetype = 2))
 
