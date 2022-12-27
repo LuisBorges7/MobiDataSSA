@@ -39,7 +39,17 @@ ui <- dashboardPage(
         tabPanel("Corredores 5", plotlyOutput("corredores5",width = "100%", height = "340")),
         tabPanel("Corredores 6", plotlyOutput("corredores6",width = "100%", height = "340"))
       )
+    )
     ),
+    fluidRow(
+      box(width=6,
+          title = "Frota operante (histórico)",status = "primary", solidHeader = TRUE,
+          plotlyOutput("historico_frota")
+      ),
+      box(width=6,
+          title = "Aquisição de ônibus novos (histórico)",status = "primary", solidHeader = TRUE,
+          plotlyOutput("historico_onibus_novos")
+      ),
     )
     )
 )

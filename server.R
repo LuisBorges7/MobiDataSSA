@@ -53,7 +53,12 @@ server <- function(input, output){
   corredores_sel5 <- select(corredores_sel5, ano, corredor, onibus.hora)
   corredores_sel6 <- select(corredores_sel6, ano, corredor, onibus.hora)
   
-  #Dados
+  #Historico frota
+  df_historico_frota <- read.csv(file = "./dados/CSVs/gerais/historico_frota_operante.csv", sep = ",")
+  
+  #Historico onibus novos
+  df_historico_onibus_novos <- read.csv(file = "./dados/CSVs/gerais/historico_onibus_novos.csv", sep = ",")
+  
   
   ##Box 1
   output$cidade <- renderInfoBox({
@@ -129,21 +134,22 @@ server <- function(input, output){
 
   })
   
-  #Media linhas por ano
+  ##Media linhas por ano
   output$media_linhas <- renderPlotly({
     ggplot(media_linhas, aes(x = ano, y = media, group = operadora)) +
       geom_line(aes(color=operadora)) +
-      geom_point(aes(color=operadora)) +
+      geom_point(color="blue") +
       theme(legend.text = element_text(size = 12))
+      
   })
   
-  #Media idade frota
+  ##Media idade frota
   output$media_idade <- renderPlotly({
     ggplot(media_idade, aes(x = ano, y = idade_media_frota, fill=group)) +
-      geom_col(width = 0.5, fill = "blue" )
+      geom_col(width = 0.5, fill = "blue")
   })
   
-  #Corredores
+  ##Corredores
   output$corredores1 <- renderPlotly({
     ggplot(corredores_sel1, aes(fill=factor(ano), y=onibus.hora, x=corredor)) + 
       geom_bar(width = 0.7,position="dodge", stat="identity") +
@@ -184,6 +190,20 @@ server <- function(input, output){
       geom_bar(width = 0.7,position="dodge", stat="identity") +
       coord_flip() + theme(axis.text = element_text(size = 8)) +
       theme(legend.text = element_text(size = 10))
+  })
+  
+  ##Historico frota
+  output$historico_frota <- renderPlotly({
+    ggplot(df_historico_frota, aes(x = ano, y = frota_operante)) +
+      geom_line(color="blue") +
+      geom_point(color="blue") +
+      theme(legend.text = element_text(size = 12))
+  })
+  
+  ##Historico onibus novos
+  output$historico_onibus_novos <- renderPlotly({
+    ggplot(df_historico_onibus_novos, aes(x = ano, y = onibus_novos, fill=group)) +
+      geom_col(width = 0.5, fill = "blue" )
   })
 }
 
