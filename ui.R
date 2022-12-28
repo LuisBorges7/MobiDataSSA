@@ -6,22 +6,25 @@ ui <- dashboardPage(
   dashboardSidebar(),
   dashboardBody(
     fluidRow(
-      tags$head(tags$style(HTML(".small-box {height: 120px}"))),
-      infoBoxOutput("cidade"),
+      tags$head(tags$style(HTML(".small-box {height: 130px}"))),
+      valueBoxOutput("cidade"),
       valueBoxOutput("linhas"),
       valueBoxOutput("operadoras"),
       valueBoxOutput("passageiros"),
       valueBoxOutput("viagens"),
-      valueBoxOutput("quilometragem")
+      valueBoxOutput("quilometragem"),
+      valueBoxOutput("cicloviaria"),
+      valueBoxOutput("pnb"),
+      valueBoxOutput("infra_apoio_ciclista"),
     ),
     fluidRow(
       box(
         title = "Frota de cada operadora (média)",status = "primary", solidHeader = TRUE,
-        plotOutput("frota", height = 250),
+        plotOutput("frota", height = 300),
       ),
       box(
         title = "Média de linhas por ano",status = "primary", solidHeader = TRUE,
-        plotlyOutput("media_linhas", height = 250))
+        plotlyOutput("media_linhas", height = 300))
       ),
     fluidRow(
       box(width=4,
@@ -29,7 +32,7 @@ ui <- dashboardPage(
         plotlyOutput("media_idade")
         ),
 
-      box(width=8,
+      box(width=8, status = "primary",
       h3("Principais corredores"),
       tabsetPanel(
         tabPanel("Corredores 1", plotlyOutput("corredores1",width = "100%", height = "340")),
@@ -55,6 +58,10 @@ ui <- dashboardPage(
       box(width=6,
           title = "Qtde de passagens e salário mínimo",status = "primary", solidHeader = TRUE,
           plotlyOutput("passagens_sm")
+      ),
+      box(width=6, height = 460,
+          title = "Terminologia & Créditos",status = "primary", solidHeader = TRUE,
+          htmlOutput("terminologia")
       )
     )
 )
