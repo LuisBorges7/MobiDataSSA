@@ -68,7 +68,9 @@ server <- function(input, output){
   #Passagens e salario minimo
   df_sm_passagens <- read.csv(file = "./dados/CSVs/gerais/salario_minimo_passagem.csv", sep = ";")
   
+  #Terminologia e creditos
   df_texto <- read.csv("./dados/CSVs/textos/texto.csv", sep = ";")
+  df_creditos <- read.csv("./dados/CSVs/textos/creditos.csv", sep = ";")
   
   ##Box 1
   output$cidade <- renderValueBox({
@@ -287,11 +289,7 @@ server <- function(input, output){
     str2 <- paste(df_texto[2,1], br())
     str3 <- paste(df_texto[3,1], br())
     str4 <- paste(df_texto[4,1], br())
-    str5 <- paste("Créditos: Os dados e informações referentes à infraestrutura cicloviária,
-                  assim como sua terminologia,
-                  foram obtidos através do Projeto CicloMapa - https://ciclomapa.org.br/ -,
-                  uma iniciativa da União dos Ciclistas do Brasil (UCB) e do
-                  Instituto de Políticas de Transporte e Desenvolvimento (ITDP Brasil) ")
+    str5 <- paste(df_creditos$texto)
 
     
     HTML(paste(str1, str2, str3, str4, str5, sep = '<br/>'))
