@@ -5,9 +5,9 @@ account: ft0rno-luis-borges
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 7956974
-bundleId: 6700829
+bundleId: 6701004
 url: https://ft0rno-luis-borges.shinyapps.io/MobiDataSSA/
-when: 1672932590.75293
-lastSyncTime: 1672932590.75298
+when: 1672935935.33946
+lastSyncTime: 1672935935.33947
 asMultiple: FALSE
 asStatic: FALSE

@@ -72,7 +72,6 @@ server <- function(input, output){
   df_rp_passagens <- read.csv(file = "./dados/CSVs/gerais/renda_mensal_domiciliar_percapita.csv",
                               sep = ";")
 
-  
   #Terminologia e creditos
   df_texto <- read.csv("./dados/CSVs/textos/texto.csv", sep = ";")
   df_creditos <- read.csv("./dados/CSVs/textos/creditos.csv", sep = ";")
@@ -87,7 +86,6 @@ server <- function(input, output){
                  "População: ", df_cidade$populacao, br(),
                  "IDH: ", df_cidade$IDH
                  )),
-      
       input$count
     )
   })
@@ -194,7 +192,6 @@ server <- function(input, output){
     )
   })
   
-  
   ##Frota pie chart
   output$frota <- renderPlot({
     ggplot(dados, aes(x="", y=value, fill=group)) +
@@ -205,7 +202,6 @@ server <- function(input, output){
         " (", scales::percent(value / sum(value)),
         ")")), position = position_stack(vjust = 0.4)) +
       theme(legend.text = element_text(size = 12))
-
   })
   
   ##Media linhas por ano
@@ -285,7 +281,8 @@ server <- function(input, output){
     ggplot(df_sm_passagens, aes(x = ano, y = sm_passagem, group = 1)) +
       geom_line(color="red") +
       geom_point(color="red") +
-      theme(legend.text = element_text(size = 12)) 
+      theme(panel.grid.major = element_line(color = "blue",size = 0.25,linetype = 1),
+            legend.text = element_text(size = 12)) 
   })
   
   ##  #Passagens e renda domiciliar per capita
@@ -293,12 +290,11 @@ server <- function(input, output){
     ggplot(df_rp_passagens, aes(x = ano, y = rp_passagem, group = 1)) +
       geom_line(color="red") +
       geom_point(color="red") +
-      theme(legend.text = element_text(size = 12)) 
+      theme(panel.grid.major = element_line(color = "blue",size = 0.25,linetype = 1),
+            legend.text = element_text(size = 12))
   })
   
-
-  
-  ##Texto
+  ##Terminologia & Créditos
   output$terminologia <- renderUI({
     str1 <- paste(df_texto[1,1], br())
     str2 <- paste(df_texto[2,1], br())
@@ -306,11 +302,6 @@ server <- function(input, output){
     str4 <- paste(df_texto[4,1], br())
     str5 <- paste(df_creditos$texto)
 
-    
     HTML(paste(str1, str2, str3, str4, str5, sep = '<br/>'))
-    #output$text1 <- renderText({paste("You have selected", input$var)})
     })
 }
-
-## theme(panel.grid = element_line(color = "#8ccde3",size = 0.75,linetype = 2))
-
