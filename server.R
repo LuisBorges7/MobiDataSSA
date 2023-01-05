@@ -68,6 +68,11 @@ server <- function(input, output){
   #Passagens e salario minimo
   df_sm_passagens <- read.csv(file = "./dados/CSVs/gerais/salario_minimo_passagem.csv", sep = ";")
   
+  #Passagens e renda domiciliar per capita
+  df_rp_passagens <- read.csv(file = "./dados/CSVs/gerais/renda_mensal_domiciliar_percapita.csv",
+                              sep = ";")
+
+  
   #Terminologia e creditos
   df_texto <- read.csv("./dados/CSVs/textos/texto.csv", sep = ";")
   df_creditos <- read.csv("./dados/CSVs/textos/creditos.csv", sep = ";")
@@ -282,6 +287,16 @@ server <- function(input, output){
       geom_point(color="red") +
       theme(legend.text = element_text(size = 12)) 
   })
+  
+  ##  #Passagens e renda domiciliar per capita
+  output$renda_percapita <- renderPlotly({
+    ggplot(df_rp_passagens, aes(x = ano, y = rp_passagem, group = 1)) +
+      geom_line(color="red") +
+      geom_point(color="red") +
+      theme(legend.text = element_text(size = 12)) 
+  })
+  
+
   
   ##Texto
   output$terminologia <- renderUI({

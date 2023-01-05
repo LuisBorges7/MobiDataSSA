@@ -56,13 +56,20 @@ ui <- dashboardPage(
     ),
     fluidRow(
       box(width=6,
-          title = "Qtde de passagens e salário mínimo",status = "primary", solidHeader = TRUE,
+          title = "Qtde de passagens x salário mínimo",status = "primary", solidHeader = TRUE,
           plotlyOutput("passagens_sm")
       ),
       box(width=6, height = 460,
-          title = "Terminologia & Créditos",status = "primary", solidHeader = TRUE,
-          htmlOutput("terminologia")
+          title = "Qtde de passagens x renda mensal domiciliar per capita",status = "primary",
+          solidHeader = TRUE,
+          plotlyOutput("renda_percapita")
       )
+    ),
+    fluidRow(
+    box(width=12, height = 320,
+        title = "Terminologia & Créditos",status = "primary", solidHeader = TRUE,
+        htmlOutput("terminologia")
+    )
     )
 )
 )
